@@ -25,7 +25,7 @@ Using GITLAB
 - we intend to put all our data on our local pc, creating a folder all source. 
 - Then we create 3 files (Extra.py , Transfrom.py , Load.py) for our pipeline.
 - Then we build a pipeline in Gitlab uing YMAL to control and monitor the flow of data within the system.
-- Then we would create SQL database using python to hold our final databas.
+- Then we would create SQL database using python to hold our final databases
 
 
 Partner:
@@ -33,10 +33,7 @@ Partner:
 - Graffiland
 
 
-
-
 Methods Used
-
 - Machine Learning
 - Data Visualization
 - ETL pipeline
@@ -46,16 +43,10 @@ Methods Used
 - YMAL
 
 
-
-
 Technologies:
-
   - Python
   - Pandas, jupyter
   - Streamlit web application
-
-
-
 
 Project Description
 
