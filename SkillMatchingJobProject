@@ -1,0 +1,7 @@
+name: Skill-Matching_Job_Porject
+
+conda_env: environment.yml
+
+entry_points:
+  main:
+    command: "python Extraction.py"
