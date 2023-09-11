@@ -1,4 +1,4 @@
-name: Skill-Matching_Job_Porject
+name: Skill_Matching_Job_Porject
 
 conda_env: environment.yml
 
