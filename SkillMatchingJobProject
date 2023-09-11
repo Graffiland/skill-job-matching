@@ -4,4 +4,4 @@ conda_env: environment.yml
 
 entry_points:
   main:
-    command: "python Extraction.py"
+    command: "python extraction.py"
