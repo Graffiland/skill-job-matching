@@ -1,7 +1,6 @@
 import pandas as pd 
 import numpy as py 
-import mlflow 
-
+import mlflow
 
 def extraction():
     survey = pd.read_csv("")
