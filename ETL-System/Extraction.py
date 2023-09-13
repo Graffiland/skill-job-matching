@@ -1,6 +1,8 @@
 import pandas as pd 
-import os 
+import numpy as py 
 import PyPDF2
+
+import mlflow
 
 
 def extraction():
@@ -13,9 +15,10 @@ def extraction():
             page = pdf_reader.pages[page_num]
             page_text = page.extract_text()
             extracted_text += page_text
-            
+
     pdf_file.close()
 
     return extracted_text;
- 
+
+mlflow.log_text(extraction())
 print(extraction())
