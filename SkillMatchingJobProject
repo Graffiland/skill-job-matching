@@ -1,0 +1,12 @@
+name: Skill_Matching_Job_Porject
+
+conda_env: environment.yml
+
+entry_points:
+  main:
+    command: "python extraction.py"
+  transformation:
+     command: "python transform.py"
+  storage:
+    command: "python load.py"
+  
