@@ -1,7 +1,4 @@
-import pandas as pd 
-import numpy as py 
 import PyPDF2
-
 import mlflow
 
 
@@ -20,5 +17,9 @@ def extraction():
 
     return extracted_text;
 
-mlflow.log_text(extraction())
-print(extraction())
+extracted_text = extraction()
+
+print(extracted_text)
+mlflow.log_text(extracted_text, "extracted_text.txt")
+
+#print("PyPDF2 Version:", mlflow.__version__)

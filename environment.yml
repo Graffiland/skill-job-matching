@@ -1,4 +1,8 @@
+python: "3.11.3"
+
+build_dependencies:
+ - pip
+
 dependencies:
-  - pip
-  - scipy
-  - mlflow>=1.0
+  - mlflow>=2.6.0
+  - PyPDF2>=3.0.1
