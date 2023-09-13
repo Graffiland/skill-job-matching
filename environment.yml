@@ -1,8 +1,5 @@
-python: "3.11.3"
-
-build_dependencies:
- - pip
-
 dependencies:
-  - mlflow>=2.6.0
-  - PyPDF2>=3.0.1
+  - pip
+  - mlflow>=1.0
+  - scipy
+  - scikit-learn
