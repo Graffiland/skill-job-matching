@@ -1,5 +1,4 @@
 dependencies:
   - pip
   - mlflow>=1.0
-  - scipy
-  - scikit-learn
+  - PyPDF2
