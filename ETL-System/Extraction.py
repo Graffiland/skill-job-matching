@@ -5,7 +5,10 @@ ROOT_DIR = os.getcwd()
 DATA_DIR = os.path.join(ROOT_DIR , "AllData")
 
 
-def extraction(filepath):
+def extraction_cv(filepath):
+    '''
+        This function is use to extract data from the csv
+    '''
     with open(filepath, 'rb') as pdf_file:
 
         pdf_reader = PyPDF2.PdfReader(pdf_file)
@@ -20,7 +23,7 @@ def extraction(filepath):
 
 if __name__=='__main__':
     filepath = os.path.join(DATA_DIR, 'RawData','Njinju.pdf')
-    extracted_text = extraction(filepath)
+    extracted_text = extraction_cv(filepath)
 
     print(extracted_text)
     mlflow.log_text(extracted_text, "extracted_text.txt")
