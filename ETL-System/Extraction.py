@@ -3,7 +3,7 @@ import mlflow
 
 
 def extraction():
-    with open('/AllData/RawData/Njinju.pdf', 'rb') as pdf_file:
+    with open('../AllData/RawData/Njinju.pdf', 'rb') as pdf_file:
 
         pdf_reader = PyPDF2.PdfReader(pdf_file)
         extracted_text = ""
