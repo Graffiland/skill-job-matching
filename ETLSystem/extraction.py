@@ -15,13 +15,12 @@ def extraction_cv(filepath):
         This function is use to extract data from the csv or word document
     '''
     if filepath.lower().endswith('.docx'):
-            
-            doc = Document(filepath)
-            extracted_text = []
-            for paragraph in doc.paragraphs:
-                extracted_text.append(paragraph.text)
+        doc = Document(filepath)
+        extracted_text = []
+        for paragraph in doc.paragraphs:
+            extracted_text.append(paragraph.text)
 
-            return "\n".join(extracted_text)
+        return "\n".join(extracted_text)
 
     else :    
         with open(filepath, 'rb') as pdf_file:
@@ -40,6 +39,6 @@ if __name__=='__main__':
     extracted_text = extraction_cv(filepath)
 
     print(extracted_text)
-   # mlflow.log_text(extracted_text, "extracted_text.txt")
+    mlflow.log_text(extracted_text, "extracted_text.txt")
 
     #print("PyPDF2 Version:", mlflow.__version__)
