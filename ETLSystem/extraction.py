@@ -2,6 +2,7 @@ import PyPDF2
 import mlflow
 import os
 ROOT_DIR = os.getcwd()
+ROOT_DIR = os.path.dirname(ROOT_DIR) # This is to extract the patent directory from the ful path(ETLSystem)
 DATA_DIR = os.path.join(ROOT_DIR , "AllData")
 
 

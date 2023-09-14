@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/rrond/OneDrive/Desktop/skill-job-matching/ETL-System/mlruns/0/b96579e5b5c74dc8a2dcc57c6e14a8bc/artifacts
+end_time: 1694676557482
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b96579e5b5c74dc8a2dcc57c6e14a8bc
+run_name: intelligent-gull-883
+run_uuid: b96579e5b5c74dc8a2dcc57c6e14a8bc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1694676557416
+status: 3
+tags: []
+user_id: ZI
