@@ -4,3 +4,4 @@ dependencies:
   - PyPDF2
   - docx
   - Document
+  - os
