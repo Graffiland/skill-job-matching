@@ -1,9 +1,6 @@
-import PyPDF2
 import mlflow
 import os
-from docx import Document
-
-
+import utilities
 
 ROOT_DIR = os.getcwd()
 ROOT_DIR = os.path.dirname(ROOT_DIR) # This is to extract the patent directory from the ful path(ETLSystem)
@@ -15,30 +12,15 @@ def extraction_cv(filepath):
         This function is use to extract data from the csv or word document
     '''
     if filepath.lower().endswith('.docx'):
-        doc = Document(filepath)
-        extracted_text = []
-        for paragraph in doc.paragraphs:
-            extracted_text.append(paragraph.text)
-
-        return "\n".join(extracted_text)
-
+        return utilities.wordextractor(filepath) # function use to extract data from a word doc
     else :    
-        with open(filepath, 'rb') as pdf_file:
-                pdf_reader = PyPDF2.PdfReader(pdf_file)
-                extracted_text = ""
-
-                for page_num in range(len(pdf_reader.pages)):
-                    page = pdf_reader.pages[page_num]
-                    page_text = page.extract_text()
-                    extracted_text += page_text
-
-        return extracted_text;
+        return utilities.pdfextractor(filepath) # function use to extract data from a pdf file
 
 if __name__=='__main__':
     filepath = os.path.join(DATA_DIR, 'RawData','Njinju.pdf')
     extracted_text = extraction_cv(filepath)
 
     print(extracted_text)
-    mlflow.log_text(extracted_text, "extracted_text.txt")
+    #mlflow.log_text(extracted_text, "extracted_text.txt")
 
     #print("PyPDF2 Version:", mlflow.__version__)
