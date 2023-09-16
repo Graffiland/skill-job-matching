@@ -4,4 +4,4 @@ conda_env: environment.yml
 
 entry_points:
   main:
-    command: 'python ETLSystem\extraction.py'
+    command: 'python src\extraction.py'
