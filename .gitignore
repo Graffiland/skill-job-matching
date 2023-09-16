@@ -3,4 +3,5 @@ venv/
 .vscode/
 vscode/
 **mlruns/
+mlruns
  
