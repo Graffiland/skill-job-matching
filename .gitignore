@@ -1,4 +1,6 @@
 AllData/
 venv/
 .vscode/
-vscode/ 
+vscode/
+**mlruns/
+ 
