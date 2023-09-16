@@ -1,5 +1,17 @@
 import docx
 import PyPDF2
+import os
+
+
+def getfilepath():
+    """
+        function is used to get path
+    """
+    ROOT_DIR = os.getcwd()
+    ROOT_DIR = os.path.dirname(ROOT_DIR) # This is to extract the patent directory from the ful path(ETLSystem)
+    DATA_DIR = os.path.join(ROOT_DIR , "AllData")
+    return DATA_DIR
+
 
 def wordextractor(filepath):
     """
@@ -13,6 +25,9 @@ def wordextractor(filepath):
     return "\n".join(extracted_text)
 
 def pdfextractor(filepath):
+    """
+        function is used to extract data from a word pdf document
+    """
     with open(filepath, 'rb') as pdf_file: # reading in the pdf file
                 pdf_reader = PyPDF2.PdfReader(pdf_file) #using a pdfreader to read in the file as a pdf
                 extracted_text = "" #empty string that holds the extracted data
@@ -23,3 +38,5 @@ def pdfextractor(filepath):
                     extracted_text += page_text
 
     return extracted_text
+
+
