@@ -25,7 +25,7 @@ def extract_surveydata(excelpath, apipath, schema):
 
     data = pd.read_excel(excelpath)
     
-    # Initialize an empty string to store the text
+    # Initializing empty string to store the text
     text = ""
 
     # Iterate through the rows of the DataFrame and convert to text
@@ -37,10 +37,8 @@ def extract_surveydata(excelpath, apipath, schema):
         for column_value in row.iloc[1:]:  # Skip the first column ('id')
             sentence += str(column_value) + " "
 
-        # Add a newline character at the end of the sentence
+        # Adding  newline character at the end of the sentence
         sentence += "\n"
-
-        # Append the sentence to the text
         text += sentence
 
     # Initialize ChatOpenAI with the specified model and temperature.
@@ -52,7 +50,6 @@ def extract_surveydata(excelpath, apipath, schema):
     # Run the chain on the generated text
     result = chain.run(text)
 
-    # Return the extracted information
     return result
 
 # Get file paths using the getfilepaths function
@@ -71,7 +68,7 @@ schema = {
     "required": [],  # All columns are required
 }
 
-# Call the function to extract data and run the chain
+# Calling function to extract data and run the chain
 result = extract_surveydata(excelpath, apipath, schema)
 
 # Print the extracted result
