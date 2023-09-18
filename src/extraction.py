@@ -21,5 +21,5 @@ if __name__=='__main__':
     extracted_text = extraction_cv(filepath)
 
     print(extracted_text)
-    mlflow.log_text(extracted_text, "extracted_text.txt")
+    #mlflow.log_text(extracted_text, "extracted_text.txt")
     #print("PyPDF2 Version:", mlflow.__version__)
