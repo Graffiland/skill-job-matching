@@ -1,6 +1,10 @@
 import docx
 import PyPDF2
 import os
+import pandas as pd
+import json
+import csv
+import re
 
 
 def getfilepath():
@@ -10,6 +14,7 @@ def getfilepath():
     ROOT_DIR = os.getcwd()
     ROOT_DIR = os.path.dirname(ROOT_DIR) # This is to extract the patent directory from the ful path(ETLSystem)
     DATA_DIR = os.path.join(ROOT_DIR , "AllData")
+
     return DATA_DIR
 
 
@@ -40,3 +45,34 @@ def pdfextractor(filepath):
     return extracted_text
 
 
+def remove_non_breaking_spaces(text):
+    if isinstance(text, str):
+        # Define a regular expression pattern to match various representations of non-breaking spaces
+        pattern = re.compile(r'[\u00a0\xa0\s]+')
+        return re.sub(pattern, ' ', text)
+    return text
+
+def extract_surveydata(surveypath):
+    
+    sv = pd.read_excel(surveypath)
+
+    # Clean up the text data in columns by removing non-breaking space characters
+    sv = sv.applymap(remove_non_breaking_spaces)
+
+    # Clean up column names (headers)
+    sv.columns = [str(x).replace("\u00a0", " ") for x in sv.columns]
+
+    csv_path = "temp.csv"
+    sv.to_csv(csv_path, index=False, quoting=csv.QUOTE_NONNUMERIC)
+
+    sv_csv = pd.read_csv(csv_path)
+
+    json_data = sv_csv.to_json(orient="records", default_handler=str)
+    
+    #print the JSON data
+    json_data = json.dumps(json.loads(json_data), indent=4)
+
+    # Clean up the temporary CSV file
+    os.remove(csv_path)
+
+    return json_data
