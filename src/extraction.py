@@ -27,9 +27,9 @@ if __name__=='__main__':
     surveypath = os.path.join(DATA_DIR,'RawData','Surveys.xlsx')
     extracted_survey = extraction_survey(surveypath)
     extracted_text = extraction_cv(filepath)
-
-    #print(extracted_text)
-    #mlflow.log_text(extracted_text, "extracted_text.txt")
+    
+    print(extracted_text)
+    mlflow.log_text(extracted_text, "extracted_text.txt")
 
     print(extracted_survey)
     mlflow.log_text(extracted_survey, "extracted_survey.txt")
