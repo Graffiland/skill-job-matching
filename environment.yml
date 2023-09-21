@@ -4,3 +4,5 @@ dependencies:
   - os
   - docx
   - Document
+  - langchain
+  - openai
