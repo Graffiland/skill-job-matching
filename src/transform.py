@@ -1,5 +1,6 @@
 from extraction import extracted_text
 import re
+import spacy
 
 def mask_data(text):
     # Define a list of sensitive information patterns to match
@@ -21,7 +22,22 @@ def mask_data(text):
 
 data = mask_data(extracted_text)
 
-print(data)
+# Load the English language model
+nlp = spacy.load("en_core_web_sm")
+
+# Define a function to extract names from a string
+def extract_names(input_string):
+    # Process the input string with spaCy
+    doc = nlp(input_string)
+
+    # Extract names (PERSON entities) from the processed text
+    names = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
+
+    return names
+
+names = extract_names(data)
+
+print(names)
 
 
 
