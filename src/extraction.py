@@ -30,7 +30,8 @@ extracted_text = extraction_cv(filepath)
 #print(extracted_text)
 #mlflow.log_text(extracted_text, "extracted_text.txt")
 
-#print(extracted_survey)
+print(extracted_survey)
+# Check if extracted_survey is a list
 #mlflow.log_text(extracted_survey, "extracted_survey.txt")
 #print("PyPDF2 Version:", mlflow.__version__)
 
