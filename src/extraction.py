@@ -22,16 +22,15 @@ def extraction_survey(surveypath):
 
    return result
 
-if __name__=='__main__':
-    filepath = os.path.join(DATA_DIR, 'RawData','Njinju.pdf')
-    surveypath = os.path.join(DATA_DIR,'RawData','Surveys.xlsx')
-    extracted_survey = extraction_survey(surveypath)
-    extracted_text = extraction_cv(filepath)
+filepath = os.path.join(DATA_DIR, 'RawData','Njinju.pdf')
+surveypath = os.path.join(DATA_DIR,'RawData','Surveys.xlsx')
+extracted_survey = extraction_survey(surveypath)
+extracted_text = extraction_cv(filepath)
     
-    print(extracted_text)
-    mlflow.log_text(extracted_text, "extracted_text.txt")
+print(extracted_text)
+mlflow.log_text(extracted_text, "extracted_text.txt")
 
-    print(extracted_survey)
-    mlflow.log_text(extracted_survey, "extracted_survey.txt")
-    #print("PyPDF2 Version:", mlflow.__version__)
+print(extracted_survey)
+mlflow.log_text(extracted_survey, "extracted_survey.txt")
+#print("PyPDF2 Version:", mlflow.__version__)
 
