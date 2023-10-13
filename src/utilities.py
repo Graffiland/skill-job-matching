@@ -76,3 +76,8 @@ def extract_surveydata(surveypath):
     os.remove(csv_path)
 
     return json_data
+
+    def maskaccuracy():
+        """
+            function is to check accuracy of masked data
+        """

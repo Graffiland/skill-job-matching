@@ -8,20 +8,27 @@ def mask_data(text):
         # Matches names with the assumption of an uppercase letter followed by lowercase letters
         # Matches Belgian phone numbers with the assumption of "+32 <digits> <digits> <digits>"
         r'\+32\s\d+\s\d+\s\d+',
-        r'\S+@\S+'  # Matches email addresses
+        r'\S+@\S+',  # Matches email addresses
+        r'\b(?:city1|city2|city3)\b'
     ]
 
-    # Define a function to replace matches with a mask
-    def replace(match):
+    # Define a function to replace matches with a mask and count the replacements
+    def replace_and_count(match):
+        nonlocal mask_count
+        mask_count += 1
         return '*' * len(match.group(0))
+
+    mask_count = 0  # Initialize the mask count
 
     # Apply the masking to the input text
     for pattern in patterns:
-        text = re.sub(pattern, replace, text)
+        text = re.sub(pattern, replace_and_count, text)
 
-    return text
+    return text, mask_count
 
 
-data = mask_data(extracted_text)
+data, count = mask_data(extracted_text)
 
 print(data)
+
+print("The number of mask text is :", count)
