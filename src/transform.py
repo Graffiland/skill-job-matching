@@ -1,5 +1,6 @@
 from extraction import extracted_text
 import re
+import utilities
 
 
 def mask_data(text):
@@ -29,6 +30,6 @@ def mask_data(text):
 
 data, count = mask_data(extracted_text)
 
-print(data)
+print(utilities.mask_personal_information((extracted_text)))
 
-print("The number of mask text is :", count)
+# print("The number of mask text is :", count)
