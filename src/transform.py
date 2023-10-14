@@ -85,3 +85,21 @@ def mask_sensitive_data(extracted_survey):
 # Process the JSON data
 masked_json = mask_sensitive_data(extracted_survey)
 print(json.dumps(masked_json, indent=2))
+
+def calculate_accuracy(original_data, masked_data):
+    total_items = len(original_data)
+    correctly_masked = 0
+
+    for i in range(total_items):
+        original_item = original_data[i]
+        masked_item = masked_data[i]
+
+        if original_item != masked_item:
+            correctly_masked += 1
+
+    accuracy = (correctly_masked / total_items) * 100
+    return accuracy
+
+# Calculate accuracy
+accuracy = calculate_accuracy(json.loads(extracted_survey), masked_json)
+print(f"Accuracy: {accuracy:.2f}%")
