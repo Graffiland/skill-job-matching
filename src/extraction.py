@@ -8,7 +8,7 @@ DATA_DIR = utilities.getfilepath()
 
 def extraction_cv(filepath):
     '''
-        This function is use to extract data from the csv or word document
+        This function is used to extract data from the csv or word document
     '''
     if filepath.lower().endswith('.docx'):
         return utilities.wordextractor(filepath)  # function use to extract data from a word doc
@@ -18,7 +18,7 @@ def extraction_cv(filepath):
 
 def extraction_survey(surveypath):
     '''
-        This function is use to extract data from the survey
+        This function is used to extract data from the survey
    '''
     result = utilities.extract_surveydata(surveypath)
 
@@ -31,8 +31,6 @@ filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', cvname)
 surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys.xlsx')
 extracted_survey = extraction_survey(surveypath)
 extracted_text = extraction_cv(filepath)
-
-print(extracted_text)
 # mlflow.log_text(extracted_text, "extracted_text.txt")
 
 # print(extracted_survey)
