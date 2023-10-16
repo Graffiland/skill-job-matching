@@ -27,12 +27,12 @@ def extraction_survey(surveypath):
     return result
 
 
-cvname = input("Enter your name with extension (.pdf) :")
+#cvname = input("Enter your name with extension (.pdf) :")
 
-filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', cvname)
+#filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', cvname)
 surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys.xlsx')
 extracted_survey = extraction_survey(surveypath)
-extracted_text = extraction_cv(filepath)
+#extracted_text = extraction_cv(filepath)
 # mlflow.log_text(extracted_text, "extracted_text.txt")
 
 # print(extracted_survey)
