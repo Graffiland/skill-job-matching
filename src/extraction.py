@@ -11,9 +11,11 @@ def extraction_cv(filepath):
         This function is used to extract data from the csv or word document
     '''
     if filepath.lower().endswith('.docx'):
-        return utilities.wordextractor(filepath)  # function use to extract data from a word doc
+        # function use to extract data from a word doc
+        return utilities.wordextractor(filepath)
     else:
-        return utilities.pdfextractor(filepath)  # function use to extract data from a pdf file
+        # function use to extract data from a pdf file
+        return utilities.pdfextractor(filepath)
 
 
 def extraction_survey(surveypath):
