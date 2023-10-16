@@ -5,6 +5,7 @@ import pandas as pd
 import json
 import csv
 import re
+import spacy
 
 
 def getfilepath():
@@ -76,3 +77,31 @@ def extract_surveydata(surveypath):
     os.remove(csv_path)
 
     return json_data
+
+def mask_personal_information(text):
+    # Load the English language model for spaCy
+    nlp = spacy.load("en_core_web_sm")
+
+    # Process the input text using spaCy
+    doc = nlp(text)
+
+    # Define categories of personal information
+    personal_info_categories = [
+        "PERSON",  # Name
+        "PHONE",  # Phone number
+        "NORP",  # Nationalities, religious, or political groups
+        "ORG"  # Organizations (e.g., trade unions)
+    ]
+
+    # Mask out identified personal information
+    masked_text = text
+    for ent in doc.ents:
+        if ent.label_ in personal_info_categories:
+            masked_text = masked_text.replace(ent.text, '*' * len(ent.text))
+
+    return masked_text
+
+def maskaccuracy():
+    """
+        function is to check accuracy of masked data
+    """

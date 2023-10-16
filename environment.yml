@@ -1,8 +1,8 @@
 dependencies:
-  - pip
+  - pip == 23.2.1
   - mlflow>=1.0
-  - os
-  - docx
-  - Document
-  - langchain
-  - openai
+  - pip:
+      - docx == 0.2.4
+      - Document == 1.0
+      - langchain == 0.0.286
+      - openai == 0.28.0
