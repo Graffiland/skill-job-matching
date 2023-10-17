@@ -12,17 +12,17 @@ def extraction_cv(filepath):
     '''
     if filepath.lower().endswith('.docx'):
         # function use to extract data from a word doc
-        return utilities.wordextractor(filepath)
+        return utilities.word_extractor(filepath)
     else:
         # function use to extract data from a pdf file
-        return utilities.pdfextractor(filepath)
+        return utilities.pdf_extractor(filepath)
 
 
 def extraction_survey(surveypath):
     '''
         This function is used to extract data from the survey
    '''
-    result = utilities.extract_surveydata(surveypath)
+    result = utilities.extract_survey_data(surveypath)
 
     return result
 

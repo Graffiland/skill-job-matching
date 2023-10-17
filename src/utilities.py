@@ -6,9 +6,15 @@ import json
 import csv
 import re
 import spacy
+import magic
 
 
-def getfilepath():
+def get_file_type(file_path):
+    mime = magic.Magic()
+    file_type = mime.from_file(file_path)
+    return file_type
+
+def get_data_directory_path():
     """
         function is used to get path
     """
@@ -19,7 +25,7 @@ def getfilepath():
     return DATA_DIR
 
 
-def wordextractor(filepath):
+def word_extractor(filepath):
     """
         function is used to extract data from a word document
     """
@@ -30,7 +36,7 @@ def wordextractor(filepath):
 
     return "\n".join(extracted_text)
 
-def pdfextractor(filepath):
+def pdf_extractor(filepath):
     """
         function is used to extract data from a word pdf document
     """
@@ -53,7 +59,7 @@ def remove_non_breaking_spaces(text):
         return re.sub(pattern, ' ', text)
     return text
 
-def extract_surveydata(surveypath):
+def extract_survey_data(surveypath):
     
     sv = pd.read_excel(surveypath)
 
@@ -101,7 +107,7 @@ def mask_personal_information(text):
 
     return masked_text
 
-def maskaccuracy():
+def mask_accuracy():
     """
         function is to check accuracy of masked data
     """
