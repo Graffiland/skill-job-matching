@@ -9,6 +9,11 @@ import os;
 nlp = spacy.load("en_core_web_sm")
 
 def redact_with_spacy(text):
+    """
+    Takes text and redacts "PERSON", "ORG", "GPE", "DATE" & EMAIL from it
+    :param str text: text to be redacted
+    :return: redacted text
+    """
     doc = nlp(text)
     redacted_text = text
 
@@ -22,7 +27,13 @@ def redact_with_spacy(text):
     redacted_text = re.sub(email_pattern, "REDACTED_EMAIL", redacted_text)
 
     return redacted_text
+
 def redact_cv(cv_path):
+    """
+    Takes a path to a CV, reads its text and applies redaction the text
+    :param str cv_path: path to cv document
+    :return: null
+    """
     file_type = util.get_file_type(cv_path)
 
     # Replace text using the redaction function
@@ -42,17 +53,14 @@ def main():
     data_home_directory = util.get_data_directory_path()
     ROOT_DIR = os.getcwd()
     cv_directory = os.path.join(ROOT_DIR , "AllData", "RawData", "CVs")
-    
-
 
     # List all files in the folder
     files = os.listdir(cv_directory)
 
     # Print the list of files
     for file in files:
-        print("printing file")
         file = os.path.join(cv_directory,file)
-        print(file)
+        print("Redacting file: {file}")
         redact_cv(file)
 
 if __name__ == "__main__":
