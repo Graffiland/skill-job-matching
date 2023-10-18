@@ -2,7 +2,11 @@ dependencies:
   - pip == 23.2.1
   - mlflow>=1.0
   - pip:
-      - docx == 0.2.4
+      - python-docx == 1.0.1
       - Document == 1.0
       - langchain == 0.0.286
       - openai == 0.28.0
+      - python-magic == 0.4.27 
+      - spacy == 3.5.3
+      - PyMuPDF == 1.23.5
+      - pypdf2 == 2.11.1

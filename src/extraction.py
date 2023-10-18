@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import utilities
 
-DATA_DIR = utilities.getfilepath()
+DATA_DIR = utilities.get_data_directory_path()
 
 
 def extraction_cv(filepath):

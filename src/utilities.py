@@ -10,6 +10,9 @@ import magic
 
 
 def get_file_type(file_path):
+    """
+        Returns a type for a given file_path
+    """
     mime = magic.Magic()
     file_type = mime.from_file(file_path)
     return file_type
