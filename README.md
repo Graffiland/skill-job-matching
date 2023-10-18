@@ -52,8 +52,11 @@ Project Description
 
 
 Project set-up 
-  - 
-  - python -m spacy download en_core_web_sm
+  - To set up this project follow the following steps
+  # Install conda 
+  # run the command below 
+  # python -m spacy download en_core_web_sm
+  
   Debian/Ubuntu
   sudo apt-get install libmagic1
    Windows
