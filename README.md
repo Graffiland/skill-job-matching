@@ -52,8 +52,10 @@ Project Description
 
 
 Project set-up 
-  - 
+  - install conda
+- conda env create --file environment.yml -n skill-job-matching-4
   - python -m spacy download en_core_web_sm
+    
   Debian/Ubuntu
   sudo apt-get install libmagic1
    Windows
