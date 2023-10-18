@@ -55,7 +55,7 @@ Using GITLAB
 1. install conda: https://conda.io/projects/conda/en/latest/user-guide/install/index.html
 2. run `conda env create --file environment.yml -n skill-job-matching-4`
 3. Download spacy's en_core_web_sm `python -m spacy download en_core_web_sm`
-4. Install `python-magic` dependencies according to your OS: https://pypi.org/project/python-magic/
+4. Install `python-magic` dependencies according to your OS: [https://pypi.org/project/python-magic/](https://pypi.org/project/python-magic/)
      
   ## Python-magic dependencies
   
