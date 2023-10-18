@@ -8,12 +8,12 @@ Project Name :  Skill Job Matching Tool.
 -- Project Status: [Active ]
 
 
-Project Intro/Objective:
+# Project Intro/Objective:
 - It's an automated AI application desined to empower professionl career coaches. 
 - It provides accurate and up-to-date career advicce to client. 
 - we aimed at combining inputs and contextual information wit the aims for enhancing the career decision-making process by matching skills to high-demand jpb roles.
 
-Architecture - PART 1 (steps on Ingestion and Preparation pipeline)
+# Architecture - PART 1 (steps on Ingestion and Preparation pipeline)
 Using Azure
 - Getting all our data from different source, performing an exploratory analysis on them to understand trend between the variables in our data set.
 - The next step is either building a pipeline in Azure or orchestrating it in Gitlab if need be. 
@@ -28,12 +28,12 @@ Using GITLAB
 - Then we would create SQL database using python to hold our final databases
 
 
-Partner:
+# Partner:
 
 - Graffiland
 
 
-Methods Used
+# Methods Used
 - Machine Learning
 - Data Visualization
 - ETL pipeline
@@ -43,15 +43,15 @@ Methods Used
 - YMAL
 
 
-Technologies:
+# Technologies:
   - Python
   - Pandas, jupyter
   - Streamlit web application
 
-Project Description
+# Project Description
 
 
-# Project set-up 
+# Steps to Set-up and run this project 
 1. install conda: https://conda.io/projects/conda/en/latest/user-guide/install/index.html
 2. run `conda env create --file environment.yml -n skill-job-matching-4`
 3. Download spacy's en_core_web_sm `python -m spacy download en_core_web_sm`
