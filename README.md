@@ -51,17 +51,19 @@ Technologies:
 Project Description
 
 
-Project set-up 
-  - install conda
-- conda env create --file environment.yml -n skill-job-matching-4
-  - python -m spacy download en_core_web_sm
-    
-  Debian/Ubuntu
-  sudo apt-get install libmagic1
-   Windows
+# Project set-up 
+1. install conda: https://conda.io/projects/conda/en/latest/user-guide/install/index.html
+2. run `conda env create --file environment.yml -n skill-job-matching-4`
+3. Download spacy's en_core_web_sm `python -m spacy download en_core_web_sm`
+4. Install `python-magic` dependencies according to your OS
+     
+  ##`Python-magic` dependencies
+    ### Debian/Ubuntu
+  `sudo apt-get install libmagic1`
+   ###Windows
   You'll need DLLs for libmagic. @julian-r maintains a pypi package with the DLLs, you can fetch it with:
 
-   pip install python-magic-bin
-  OSX
-  When using Homebrew: brew install libmagic
-  When using macports: port install file
+   `pip install python-magic-bin`
+  ### OSX
+  When using Homebrew: `brew install libmagic`
+  When using macports: `port install file`
