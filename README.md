@@ -57,13 +57,18 @@ Project Description
 3. Download spacy's en_core_web_sm `python -m spacy download en_core_web_sm`
 4. Install `python-magic` dependencies according to your OS
      
-  ##`Python-magic` dependencies
-    ### Debian/Ubuntu
+  ## Python-magic dependencies
+  
+  ### Debian/Ubuntu
   `sudo apt-get install libmagic1`
-   ###Windows
+  
+  ### Windows
+  
   You'll need DLLs for libmagic. @julian-r maintains a pypi package with the DLLs, you can fetch it with:
 
    `pip install python-magic-bin`
+   
   ### OSX
+  
   When using Homebrew: `brew install libmagic`
   When using macports: `port install file`
