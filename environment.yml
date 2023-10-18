@@ -1,6 +1,7 @@
 dependencies:
   - pip == 23.2.1
   - mlflow>=1.0
+  - Python == 3.11.5
   - pip:
       - python-docx == 1.0.1
       - Document == 1.0
