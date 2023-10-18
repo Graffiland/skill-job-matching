@@ -57,7 +57,8 @@ Using GITLAB
 3. Download spacy's en_core_web_sm `python -m spacy download en_core_web_sm`
 4. Install `python-magic` dependencies according to your OS using the instructions below:
 
-   - Debian/Ubuntu
+  - Debian/Ubuntu
+     
   `sudo apt-get install libmagic1`
   
   - Windows
@@ -69,4 +70,5 @@ Using GITLAB
   - OSX
   
   When using Homebrew: `brew install libmagic`
+  
   When using macports: `port install file`
