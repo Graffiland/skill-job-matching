@@ -8,6 +8,7 @@ import re
 import spacy
 import magic
 
+nlp = spacy.load("en_core_web_sm")
 
 def get_file_type(file_path):
     """
@@ -109,6 +110,35 @@ def mask_personal_information(text):
             masked_text = masked_text.replace(ent.text, '*' * len(ent.text))
 
     return masked_text
+def mask_personal_information_2(text):
+    """
+    Takes text and redacts "PERSON", "GPE", "DATE", "PHONE", "NORP", "ORG","EMAIL", "LOC", "FAC" from it
+    :param str text: text to be redacted
+    :return: redacted text
+    """
+    doc = nlp(text)
+    redacted_text = text
+
+    # Redaction with spacy
+    for ent in doc.ents:
+        if ent.label_ in ["PERSON", "GPE", "DATE", "PHONE", "NORP", "ORG","EMAIL", "LOC", "FAC"]:
+            # Redact entities like names, organizations, locations, and dates
+            redacted_text = redacted_text.replace(ent.text, "REDACTED")
+
+    # Add more redaction for properties not caught by spacy
+    # Redact email addresses using regex
+    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b'
+    redacted_text = re.sub(email_pattern, "REDACTED_EMAIL", redacted_text)
+
+    # Define a regular expression pattern to match both common and additional phone number formats
+    phone_number_pattern = r'\+?\d{0,4}\s?\(?\d+\)?\s?\d+\s?\d+\s?\d+|\(\d{3}\)\s?\d{3}-\d{4}'
+    redacted_text = re.sub(phone_number_pattern, "REDACTED_PHONE_NUMBER", redacted_text)
+
+    # Define a regular expression pattern to match both common and additional phone number formats
+    name_pattern = r'\b[A-Z][A-Za-z]* [A-Z][A-Za-z]* [A-Z][A-Za-z]*\b'
+    redacted_text = re.sub(name_pattern, "REDACTED_PERSON'S NAME", redacted_text)
+
+    return redacted_text
 
 def mask_accuracy():
     """
