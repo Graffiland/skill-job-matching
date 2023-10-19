@@ -2,11 +2,13 @@ import fitz  # PyMuPDF
 from docx import Document
 import spacy
 import re
-import utilities as util;
-import os;
+import utilities as util
+import os
+from extraction import extracted_text
 
 # Load the NLP model
 nlp = spacy.load("en_core_web_sm")
+
 
 def redact_with_spacy(text):
     """
@@ -28,40 +30,44 @@ def redact_with_spacy(text):
 
     return redacted_text
 
-def redact_cv(cv_path):
+
+def redact_cv(text):
     """
     Takes a path to a CV, reads its text and applies redaction the text
     :param str cv_path: path to cv document
     :return: null
     """
-    file_type = util.get_file_type(cv_path)
+    # file_type = util.get_file_type(cv_path)
 
     # Replace text using the redaction function
-    if "PDF" in file_type:
-        text = util.pdf_extractor(cv_path)
-        redacted_text = redact_with_spacy(text)
-        print(redacted_text)
+    # if "PDF" in file_type:
+    # text = util.pdf_extractor(cv_path)
+    redacted_text = redact_with_spacy(text)
+    print(redacted_text)
 
-    elif "Microsoft Word" in file_type:
-        text = util.word_extractor(cv_path)
-        redacted_text = redact_with_spacy(text)
-        print(redacted_text)
-    else:
-        print(f"{cv_path} is not PDF or Microsoft Word document.")
+    # elif "Microsoft Word" in file_type:
+    #     text = util.word_extractor(cv_path)
+    #     redacted_text = redact_with_spacy(text)
+    #     print(redacted_text)
+    # else:
+    #     print(f"{cv_path} is not PDF or Microsoft Word document.")
+
 
 def main():
-    data_home_directory = util.get_data_directory_path()
-    ROOT_DIR = os.getcwd()
-    cv_directory = os.path.join(ROOT_DIR , "AllData", "RawData", "CVs")
+    redact_cv(extracted_text)
+    # data_home_directory = util.get_data_directory_path()
+    # ROOT_DIR = os.getcwd()
+    # cv_directory = os.path.join(ROOT_DIR, "AllData", "RawData", "CVs")
 
-    # List all files in the folder
-    files = os.listdir(cv_directory)
+    # # List all files in the folder
+    # files = os.listdir(cv_directory)
 
-    # Print the list of files
-    for file in files:
-        file = os.path.join(cv_directory,file)
-        print("Redacting file: {file}")
-        redact_cv(file)
+    # # Print the list of files
+    # for file in files:
+    #     file = os.path.join(cv_directory, file)
+    #     print("Redacting file: {file}")
+    #     redact_cv(file)
+
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import utilities
 
-DATA_DIR = utilities.getfilepath()
+DATA_DIR = utilities.get_data_directory_path()
 
 
 def extraction_cv(filepath):
@@ -27,12 +27,14 @@ def extraction_survey(surveypath):
     return result
 
 
-#cvname = input("Enter your name with extension (.pdf) :")
+# cvname = input("Enter your name with extension (.pdf) :")
 
-#filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', cvname)
+nameofcv = input("Enter name of CV (PDF at end): ")
+
+filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', nameofcv)
 surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys.xlsx')
 extracted_survey = extraction_survey(surveypath)
-#extracted_text = extraction_cv(filepath)
+extracted_text = extraction_cv(filepath)
 # mlflow.log_text(extracted_text, "extracted_text.txt")
 
 # print(extracted_survey)
