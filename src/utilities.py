@@ -8,6 +8,8 @@ import re
 import spacy
 import magic
 
+JOBS_SKILLS_CONFIG = None
+
 nlp = spacy.load("en_core_web_sm")
 
 def get_file_type(file_path):
@@ -139,6 +141,7 @@ def mask_personal_information_2(text):
     redacted_text = re.sub(name_pattern, "REDACTED_PERSON'S NAME", redacted_text)
 
     return redacted_text
+
 
 def mask_accuracy():
     """
