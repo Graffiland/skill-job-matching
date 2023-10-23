@@ -96,21 +96,6 @@ def mask_sensitive_data(extracted_survey):
     return masked_data
 
 
-def calculate_accuracy(original_data, masked_data):
-    total_items = len(original_data)
-    correctly_masked = 0
-
-    for i in range(total_items):
-        original_item = original_data[i]
-        masked_item = masked_data[i]
-
-        if original_item != masked_item:
-            correctly_masked += 1
-
-    accuracy = (correctly_masked / total_items) * 100
-    return accuracy
-
-
 class Transformcv:
     def __init__(self, extraction_data):
         self.extraction_data = extraction_data
