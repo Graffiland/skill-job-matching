@@ -2,8 +2,14 @@ from extraction import extracted_survey
 import re
 import json
 import spacy
+from extraction import extracted_text
+import spacy
+import re
+import utilities
+
 
 nlp = spacy.load("en_core_web_sm")
+
 
 def mask_sensitive_data(extracted_survey):
     # Regular expression pattern to match email addresses
@@ -67,14 +73,21 @@ def mask_sensitive_data(extracted_survey):
                         value = value.replace(name, '***')
                     doc = nlp(value)
                     for ent in doc.ents:
-                        if ent.label_ in ("GPE", "LOC"):  # Filter country and continent names
+                        # Filter country and continent names
+                        if ent.label_ in ("GPE", "LOC"):
                             value = value.replace(ent.text, '***')
-                    value = re.sub(gender_pattern, '***', value, flags=re.IGNORECASE)
-                    value = re.sub(ethnic_region_pattern, '***', value, flags=re.IGNORECASE)
-                    value = re.sub(religious_pattern, '***', value, flags=re.IGNORECASE)
-                    value = re.sub(genetic_pattern, '***', value, flags=re.IGNORECASE)
-                    value = re.sub(biometric_pattern, '***', value, flags=re.IGNORECASE)
-                    value = re.sub(health_pattern, '***', value, flags=re.IGNORECASE)
+                    value = re.sub(gender_pattern, '***',
+                                   value, flags=re.IGNORECASE)
+                    value = re.sub(ethnic_region_pattern, '***',
+                                   value, flags=re.IGNORECASE)
+                    value = re.sub(religious_pattern, '***',
+                                   value, flags=re.IGNORECASE)
+                    value = re.sub(genetic_pattern, '***',
+                                   value, flags=re.IGNORECASE)
+                    value = re.sub(biometric_pattern, '***',
+                                   value, flags=re.IGNORECASE)
+                    value = re.sub(health_pattern, '***',
+                                   value, flags=re.IGNORECASE)
                     masked_item[key] = value
                 else:
                     masked_item[key] = value
@@ -82,9 +95,6 @@ def mask_sensitive_data(extracted_survey):
 
     return masked_data
 
-# Process the JSON data
-masked_json = mask_sensitive_data(extracted_survey)
-print(json.dumps(masked_json, indent=2))
 
 def calculate_accuracy(original_data, masked_data):
     total_items = len(original_data)
@@ -100,6 +110,63 @@ def calculate_accuracy(original_data, masked_data):
     accuracy = (correctly_masked / total_items) * 100
     return accuracy
 
-# Calculate accuracy
-accuracy = calculate_accuracy(json.loads(extracted_survey), masked_json)
-print(f"Accuracy: {accuracy:.2f}%")
+
+class Transformcv:
+    def __init__(self, extraction_data):
+        self.extraction_data = extraction_data
+
+    def masking_on_data(self):
+        data = self.extraction_data
+
+        data = utilities.clean_phone_number(data)
+
+        # Load the pre-trained statistical model
+        nlp = spacy.load("en_core_web_sm")
+        # Process the text using spaCy
+        doc = nlp(data)
+
+        # List to store all the proper-nouns for human names
+        pii = []
+
+        mob_regex = r"\+?\d{1,4}[-\s\.]?\(?\d{1,4}\)?[-\s\.]?\d{1,10}[-\s\.]?\d{1,10}[-\s\.]?\d{1,10}"
+
+        email_regex = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+
+        # Common non-human names that we want to filter out
+        excluded_names = {"Coursera", "Git", "Github", "Linkedln", "Python"}
+
+        for token in doc:
+            if token.pos_ == 'PROPN':
+                # Check if it's a person's name or a country name based on NER
+                if token.ent_type_ in ['PERSON', 'GPE'] and token.text.lower() not in map(str.lower, excluded_names):
+                    pii.append(token.text)
+                    # Replace the name with a mask (e.g., "MASKED")
+                    data = re.sub(r'\b' + re.escape(token.text) +
+                                  r'\b', "*****", data, flags=re.I)
+            elif re.search(mob_regex, str(token), re.IGNORECASE):
+                pii.append(token.text)
+                data = re.sub(re.escape(token.text), "*****", data, flags=re.I)
+            elif re.search(email_regex, token.text, re.IGNORECASE):
+                pii.append(token.text)
+                data = re.sub(re.escape(token.text), "*****", data, flags=re.I)
+
+        return data, len(pii), pii
+
+
+if __name__ == "__main__":
+    # Creating object of class
+    Transformcvobject = Transformcv(extracted_text)
+
+    masked_text, count, maskeddata = Transformcvobject.masking_on_data()
+
+    # print(masked_text)
+    # print("\n")
+    # print(count)
+    # print("\n")
+    # print(maskeddata)
+    # Process the JSON data
+    # masked_json = mask_sensitive_data(extracted_survey)
+    # print(json.dumps(masked_json, indent=2))
+    # # Calculate accuracy
+    # accuracy = calculate_accuracy(json.loads(extracted_survey), masked_json)
+    # print(f"Accuracy: {accuracy:.2f}%")
