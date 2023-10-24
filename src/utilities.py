@@ -168,7 +168,27 @@ def clean_phone_number(text):
         return text
 
 
-def mask_accuracy():
-    """
-        function is to check accuracy of masked data
-    """
+def create_mapping(cv_data_string, survey_data):
+    cv_email_matches = re.findall(r'\S+@\S+', cv_data_string)
+    cv_emails = [email.strip() for email in cv_email_matches]
+
+    # Create a mapping dictionary based on email addresses
+    mapping = {}
+
+    for survey_entry in survey_data:
+        email = survey_entry.get("Email Address")
+        if email in cv_emails:
+            cv_text = cv_data_string
+            mapping[email] = {
+                "CV Text": cv_text,
+                "Survey Entry": survey_entry
+            }
+            
+    return mapping
+
+
+def mask(mapping):
+    for email, data in mapping.items():
+        mask_cv=data["CV Text"]
+        mask_survey=data["Survey Entry"]
+    return mask_cv, mask_survey
