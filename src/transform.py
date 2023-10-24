@@ -13,8 +13,7 @@ nlp = spacy.load("en_core_web_sm")
 extracted_survey = json.loads(extracted_survey)
 dict_cvsurvey=utilities.create_mapping(extracted_text,extracted_survey)
 
-extracted_text, extracted_survey=utilities.mask(dict_cvsurvey)
-
+extracted_text, extracted_surveys=utilities.mask(dict_cvsurvey)
 
 def mask_sensitive_data(extracted_survey):
     # Regular expression pattern to match email addresses
@@ -47,11 +46,12 @@ def mask_sensitive_data(extracted_survey):
         return '***'
 
     # Parse the JSON string into a Python object (list of dictionaries)
-    extracted_survey = json.loads(extracted_survey)
+    #extracted_survey = json.loads(extracted_survey)
 
     # Extract names from "First/Given names" and "Last/Family names"
     names_to_mask = set()
     for item in extracted_survey:
+        print(type(extracted_surveys))
         first_name = item.get("First/Given names", "")
         last_name = item.get("Last/Family names", "")
         if first_name:
@@ -150,7 +150,8 @@ if __name__ == "__main__":
     masked_text, count, maskeddata = Transformcvobject.masking_on_data()
 
     #print(dict_cvsurvey)
-
+    #print(extracted_text)
+    #print(extracted_surveys)
     #print(masked_text)
     
     # print("\n")
@@ -158,7 +159,8 @@ if __name__ == "__main__":
     # print("\n")
     # print(maskeddata)
     # Process the JSON data
-    masked_json = mask_sensitive_data(extracted_survey)
+    print(type(extracted_surveys))
+    masked_json = mask_sensitive_data(extracted_surveys)
     print(json.dumps(masked_json, indent=2))
     # # Calculate accuracy
     # accuracy = calculate_accuracy(json.loads(extracted_survey), masked_json)
