@@ -7,15 +7,22 @@ import spacy
 import re
 import utilities
 
-
 nlp = spacy.load("en_core_web_sm")
 
 extracted_survey = json.loads(extracted_survey)
+print(f' second : {type(extracted_survey)}')
 dict_cvsurvey=utilities.create_mapping(extracted_text,extracted_survey)
 
 extracted_text, extracted_surveys=utilities.mask(dict_cvsurvey)
+extracted_sur = [extracted_surveys]
+extracted_surveys = json.dumps(extracted_sur)
+print(extracted_surveys)
+print(f' first : {type(extracted_surveys)}')
 
-def mask_sensitive_data(extracted_survey):
+
+def mask_sensitive_data(extracted_surveys):
+    #extracted_surveys = list(extracted_surveys) 
+    print(type(extracted_surveys))
     # Regular expression pattern to match email addresses
     email_pattern = r'\b[\w.-]+@[a-zA-Z.-]+\b'
 
@@ -46,12 +53,12 @@ def mask_sensitive_data(extracted_survey):
         return '***'
 
     # Parse the JSON string into a Python object (list of dictionaries)
-    #extracted_survey = json.loads(extracted_survey)
-
+    #extracted_surveys = list(extracted_surveys) 
+    extracted_surveys = json.loads(extracted_surveys)
+    print(type(extracted_surveys))
     # Extract names from "First/Given names" and "Last/Family names"
     names_to_mask = set()
-    for item in extracted_survey:
-        print(type(extracted_surveys))
+    for item in extracted_surveys:
         first_name = item.get("First/Given names", "")
         last_name = item.get("Last/Family names", "")
         if first_name:
@@ -60,7 +67,7 @@ def mask_sensitive_data(extracted_survey):
             names_to_mask.add(last_name)
 
     masked_data = []
-    for item in extracted_survey:
+    for item in extracted_surveys:
         masked_item = {}
         for key, value in item.items():
             if key == "Email Address":
@@ -159,9 +166,6 @@ if __name__ == "__main__":
     # print("\n")
     # print(maskeddata)
     # Process the JSON data
-    print(type(extracted_surveys))
     masked_json = mask_sensitive_data(extracted_surveys)
     print(json.dumps(masked_json, indent=2))
-    # # Calculate accuracy
-    # accuracy = calculate_accuracy(json.loads(extracted_survey), masked_json)
-    # print(f"Accuracy: {accuracy:.2f}%")
+  
