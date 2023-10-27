@@ -1,39 +1,36 @@
-import pandas as pd
 import sqlite3
-from transform import masked_text, masked_survey
 import json
+from transform import masked_text, masked_survey
 
-
+# Connect to the SQLite database
 conn = sqlite3.connect('mydatabase.db')
-
 cursor = conn.cursor()
 
-cursor.execute('''DROP TABLE skilljob''')
+# Drop the table if it exists (optional)
+cursor.execute('''DROP TABLE IF EXISTS skilljob''')
 
-# Create the energy_data table with the specified columns
+# Create the skilljob table with the specified columns
 cursor.execute('''CREATE TABLE skilljob (
-     maskedcv TEXT CHECK(LENGTH(maskedcv) <= 1000000000),    
-     maskedsurvey JSON CHECK(LENGTH(maskedsurvey) <= 10000000000)      
-                 )''')
-
-# masked_survey_dict = json.loads(masked_survey)
+    maskedcv TEXT CHECK(LENGTH(maskedcv) <= 1000000000),
+    maskedsurvey JSON CHECK(LENGTH(maskedsurvey) <= 10000000000)
+)''')
 
 # Insert data into the table
+insert_data = [
+    (masked_text, json.dumps(masked_survey)),
+    # Add more rows as needed
+]
 
-cursor.executemany("INSERT INTO skilljob(maskedcv) VALUES (?)", [
-                   (value,) for value in masked_text])
+cursor.executemany("INSERT INTO skilljob (maskedcv, maskedsurvey) VALUES (?, ?)", insert_data)
 
-# cursor.execute(
-#     "UPDATE skilljob SET maskedsurvey = ?", (masked_survey,))
+# Commit the changes
+conn.commit()
 
-cursor.execute('''SELECT * FROM skilljob''')
-
-# Fetch all rows
+# Retrieve and display data
+cursor.execute("SELECT * FROM skilljob")
 rows = cursor.fetchall()
 
-print(rows)
-
-# Print the column names (assuming you want to print them)
+# Print the column names
 column_names = [description[0] for description in cursor.description]
 print(column_names)
 
@@ -41,6 +38,5 @@ print(column_names)
 for row in rows:
     print(row)
 
-# Save the changes and close the connection
-conn.commit()
+# Close the connection
 conn.close()
