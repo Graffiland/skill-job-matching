@@ -10,19 +10,19 @@ import utilities
 nlp = spacy.load("en_core_web_sm")
 
 extracted_survey = json.loads(extracted_survey)
-print(f' second : {type(extracted_survey)}')
-dict_cvsurvey=utilities.create_mapping(extracted_text,extracted_survey)
+# print(f' second : {type(extracted_survey)}')
+dict_cvsurvey = utilities.create_mapping(extracted_text, extracted_survey)
 
-extracted_text, extracted_surveys=utilities.mask(dict_cvsurvey)
+extracted_text, extracted_surveys = utilities.mask(dict_cvsurvey)
 extracted_sur = [extracted_surveys]
 extracted_surveys = json.dumps(extracted_sur)
-print(extracted_surveys)
-print(f' first : {type(extracted_surveys)}')
+# print(extracted_surveys)
+# print(f' first : {type(extracted_surveys)}')
 
 
 def mask_sensitive_data(extracted_surveys):
-    #extracted_surveys = list(extracted_surveys) 
-    print(type(extracted_surveys))
+    # extracted_surveys = list(extracted_surveys)
+    # print(type(extracted_surveys))
     # Regular expression pattern to match email addresses
     email_pattern = r'\b[\w.-]+@[a-zA-Z.-]+\b'
 
@@ -53,7 +53,7 @@ def mask_sensitive_data(extracted_surveys):
         return '***'
 
     # Parse the JSON string into a Python object (list of dictionaries)
-    #extracted_surveys = list(extracted_surveys) 
+    # extracted_surveys = list(extracted_surveys)
     extracted_surveys = json.loads(extracted_surveys)
     print(type(extracted_surveys))
     # Extract names from "First/Given names" and "Last/Family names"
@@ -150,22 +150,21 @@ class Transformcv:
         return data, len(pii), pii
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # Creating object of class
-    Transformcvobject = Transformcv(extracted_text)
+Transformcvobject = Transformcv(extracted_text)
 
-    masked_text, count, maskeddata = Transformcvobject.masking_on_data()
+masked_text, count, maskeddata = Transformcvobject.masking_on_data()
 
-    #print(dict_cvsurvey)
-    #print(extracted_text)
-    #print(extracted_surveys)
-    #print(masked_text)
-    
-    # print("\n")
-    # print(count)
-    # print("\n")
-    # print(maskeddata)
-    # Process the JSON data
-    masked_survey = mask_sensitive_data(extracted_surveys)
-    print(json.dumps(masked_survey, indent=2))
-  
+# print(dict_cvsurvey)
+# print(extracted_text)
+# print(extracted_surveys)
+# print(masked_text)
+
+# print("\n")
+# print(count)
+# print("\n")
+# print(maskeddata)
+# Process the JSON data
+masked_survey = mask_sensitive_data(extracted_surveys)
+# print(json.dumps(masked_survey, indent=2))
