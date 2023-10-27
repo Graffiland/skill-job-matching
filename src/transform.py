@@ -166,6 +166,6 @@ if __name__ == "__main__":
     # print("\n")
     # print(maskeddata)
     # Process the JSON data
-    masked_json = mask_sensitive_data(extracted_surveys)
-    print(json.dumps(masked_json, indent=2))
+    masked_survey = mask_sensitive_data(extracted_surveys)
+    print(json.dumps(masked_survey, indent=2))
   
