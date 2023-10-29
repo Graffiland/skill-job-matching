@@ -7,6 +7,9 @@ import spacy
 import re
 import utilities
 
+print(json.__version__)
+print(re.__version__)
+
 nlp = spacy.load("en_core_web_sm")
 
 extracted_survey = json.loads(extracted_survey)
