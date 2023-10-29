@@ -38,5 +38,8 @@ print(column_names)
 for row in rows:
     print(row)
 
+## alternative way of printing all rows
+##for row in cursor.execute(select * from skilljob):
+#      print(row)
 # Close the connection
 conn.close()
