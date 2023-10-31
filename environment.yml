@@ -1,4 +1,4 @@
-name: mlflow-env
+name: skillmatching-env
 channels:
   - conda-forge
 dependencies:
