@@ -3,7 +3,8 @@ channels:
   - conda-forge
 dependencies:
   - pip == 23.2.1
-  - python == 3.11.5
+  - python == 3.9
+  - spacy==3.7.1
   - pip:
       - python-docx == 1.0.1
       - Document == 1.0
@@ -15,4 +16,4 @@ dependencies:
       - PyYAML == 6.0.1
       - mlflow>=1.0
       - prefect
-      - spacy==3.7.1
+      - en_core_web_sm==3.0.0
