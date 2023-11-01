@@ -1,4 +1,4 @@
-name: skillmatch-env
+name: skill-match
 channels:
   - conda-forge
 dependencies:
@@ -16,4 +16,3 @@ dependencies:
       - PyYAML == 6.0.1
       - mlflow>=1.0
       - prefect
-      - en_core_web_sm==3.0.0
