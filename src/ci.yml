@@ -1,0 +1,23 @@
+name: ETL Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_etl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: skill-match
+          environment-file: environment.yml
+
+      - name: Execute ETL
+        run: conda run python src/extraction.py
