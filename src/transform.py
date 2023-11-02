@@ -58,7 +58,7 @@ def mask_sensitive_data(extracted_surveys):
     # Parse the JSON string into a Python object (list of dictionaries)
     # extracted_surveys = list(extracted_surveys)
     extracted_surveys = json.loads(extracted_surveys)
-    print(type(extracted_surveys))
+    #print(type(extracted_surveys))
     # Extract names from "First/Given names" and "Last/Family names"
     names_to_mask = set()
     for item in extracted_surveys:

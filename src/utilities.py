@@ -194,7 +194,10 @@ def create_mapping(cv_data_string, survey_data):
 
 
 def mask(mapping):
-    for email, data in mapping.items():
-        mask_cv=data["CV Text"]
-        mask_survey=data["Survey Entry"]
-    return mask_cv, mask_survey
+    if len(mapping)==0:
+        print('check CV OR Survey data')
+    else:
+        for email, data in mapping.items():
+            mask_cv=data["CV Text"]
+            mask_survey=data["Survey Entry"]
+        return mask_cv, mask_survey
