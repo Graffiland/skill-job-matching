@@ -31,7 +31,7 @@ def extraction_survey(surveypath):
 nameofcv = input("Enter name of CV (PDF at end): ")
 
 filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', nameofcv)
-surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys.xlsx')
+surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys_updated.xlsx')
 extracted_survey = extraction_survey(surveypath)
 extracted_text = extraction_cv(filepath)
 # mlflow.log_text(extracted_text, "extracted_text.txt")
