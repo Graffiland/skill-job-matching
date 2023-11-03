@@ -157,6 +157,7 @@ def clean_phone_number(text):
     # Use regular expression to find the phone number pattern
     phone_number_pattern = re.compile(
         r'\+\d{1,4}\s*[-.\s]?\(?[0-9A-Za-z]*\)?[-.\s]?[0-9A-Za-z]*[-.\s]?[0-9A-Za-z]*')
+    
 
     match = re.search(phone_number_pattern, text)
 

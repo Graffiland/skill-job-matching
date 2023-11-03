@@ -117,8 +117,8 @@ class Transformcv:
 
     def masking_on_data(self):
         data = self.extraction_data
-
-        data = utilities.clean_phone_number(data)
+        data = utilities.mask_personal_information_2(data)
+        #data = utilities.clean_phone_number(data)
 
         # Load the pre-trained statistical model
         nlp = spacy.load("en_core_web_sm")
