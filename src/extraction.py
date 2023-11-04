@@ -4,6 +4,18 @@ import utilities
 
 DATA_DIR = utilities.get_data_directory_path()
 
+cv_directory = os.path.join(DATA_DIR, 'RawData', 'CVs')
+# List all files in the CV directory
+cv_files = os.listdir(cv_directory)
+# Gets the only file from the cv
+nameofcv = cv_files[0]
+
+
+# CV filepath
+filepath = os.path.join(cv_directory, nameofcv)
+# survey filepath
+surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys1.xlsx')
+
 
 def extraction_cv(filepath):
     '''
@@ -20,22 +32,12 @@ def extraction_cv(filepath):
 def extraction_survey(surveypath):
     '''
         This function is used to extract data from the survey
-   '''
+    '''
     result = utilities.extract_survey_data(surveypath)
 
     return result
 
 
-# cvname = input("Enter your name with extension (.pdf) :")
-
-nameofcv = input("Enter name of CV (PDF at end): ")
-
-filepath = os.path.join(DATA_DIR, 'RawData', 'CVs', nameofcv)
-surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys1.xlsx')
+# OUTPUTS (extracted_text(string) and extracted_survey(JSON format))
 extracted_survey = extraction_survey(surveypath)
 extracted_text = extraction_cv(filepath)
-# mlflow.log_text(extracted_text, "extracted_text.txt")
-#print(extracted_text)
-#print(extracted_survey)
-# mlflow.log_text(extracted_survey, "extracted_survey.txt")
-# print("PyPDF2 Version:", mlflow.__version__)
