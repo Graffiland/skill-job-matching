@@ -1,11 +1,7 @@
 # Import Libraries
 from extraction import extracted_survey
-import re
 import json
-import spacy
 from extraction import extracted_text
-import spacy
-import re
 import utilities
 
 extracted_survey = json.loads(extracted_survey)

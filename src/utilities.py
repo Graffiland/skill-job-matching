@@ -6,7 +6,6 @@ import json
 import csv
 import re
 import spacy
-import subprocess
 import sqlite3
 
 JOBS_SKILLS_CONFIG = None
