@@ -139,27 +139,51 @@ def create_mapping(cv_data_string, survey_data):
     """
         This function is use to map survey and cv using their email and returns a dictionary of survey and cv
     """
-    cv_email_matches = re.findall(r'\S+@\S+', cv_data_string)
-    cv_emails = [email.strip() for email in cv_email_matches]
+    if cv_data_string is not None:
+        cv_email_matches = re.findall(r'\S+@\S+', cv_data_string)
+        cv_emails = [email.strip() for email in cv_email_matches]
 
-    # Create a mapping dictionary based on email addresses
-    mapping = {}
+        # Create a mapping dictionary based on email addresses
+        mapping = {}
 
-    for survey_entry in survey_data:
-        email = survey_entry.get("Email Address")
-        if email in cv_emails:
-            cv_text = cv_data_string
-            mapping[email] = {
-                "CV Text": cv_text,
-                "Survey Entry": survey_entry
-            }
+        for survey_entry in survey_data:
+            email = survey_entry.get("Email Address")
+            if email in cv_emails:
+                cv_text = cv_data_string
+                mapping[email] = {
+                    "CV Text": cv_text,
+                    "Survey Entry": survey_entry
+                }
 
-    return mapping
+        return mapping
+    else:
+        mapping = {}
+        for survey_entry in survey_data:
+            email = survey_entry.get("Email Address")
+            mapping[email] = {"Survey Entry": survey_entry}
+
+        return mapping
+
+
+def has_only_survey_entry(mapping):
+    for key, value in mapping.items():
+        # Check if the value is a dictionary and contains only the key 'Survey Entry'
+        if isinstance(value, dict):
+            inner_keys = value.keys()
+            if len(inner_keys) == 1 and 'Survey Entry' in inner_keys:
+                return True
+    # If no key in the dictionary satisfies the condition, return False
+    return False
 
 
 def mask(mapping):
-    if len(mapping) == 0:
-        print('check CV OR Survey data')
+    if has_only_survey_entry(mapping):
+        for email, data in mapping.items():
+            mask_cv = "No CV"
+            surveydata = data["Survey Entry"]
+            email = email
+        return mask_cv, surveydata, email
+
     else:
         for email, data in mapping.items():
             mask_cv = data["CV Text"]
