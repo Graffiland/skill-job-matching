@@ -1,8 +1,10 @@
 name: my_environment
 channels:
   - default
+  - conda-forge
+  - anaconda
 dependencies:
-  - pip == 23.2.1
+  - pip
   - python == 3.9
   - spacy==3.7.1
   - mlflow==2.8.0
