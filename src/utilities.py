@@ -293,7 +293,7 @@ def create_and_insert_skilljob_table(cvsurveyemail, masked_cv, masked_survey):
 
         # Create the skilljob table with the specified columns
         cursor.execute('''CREATE TABLE skilljob (
-            Email_Address TEXT CHECK(LENGTH(Email_Address) <= 1000000000),
+            Email_Address TEXT PRIMARY KEY CHECK(LENGTH(Email_Address) <= 1000000000),
             Masked_CV TEXT CHECK(LENGTH(Masked_CV) <= 1000000000),
             Masked_Survey JSON CHECK(LENGTH(Masked_Survey) <= 10000000000),
             Response TEXT CHECK(LENGTH(Response) <= 1000000000)
