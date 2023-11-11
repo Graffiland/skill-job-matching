@@ -40,7 +40,7 @@ cv_files = cv_files if cv_files else []
 filepath = os.path.join(cv_directory, cv_files[0]) if cv_files else None
 
 # Survey filepath
-surveypath = os.path.join(DATA_DIR, 'RawData', 'Surveys1.xlsx')
+surveypath = os.path.join(DATA_DIR, 'RawData', 'surveys', 'Surveys1.xlsx')
 
 # OUTPUTS (extracted_text(string) and extracted_survey(JSON format))
 extracted_survey = extraction_survey(surveypath)
