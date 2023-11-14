@@ -3,4 +3,5 @@ venv/
 vscode/
 **mlruns/
 mlruns
- 
+.env
+mydatabase.db/

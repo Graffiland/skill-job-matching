@@ -311,18 +311,71 @@ def create_and_insert_skilljob_table(cvsurveyemail, masked_cv, masked_survey):
         # Commit the changes
         conn.commit()
 
-        # Retrieve and display data
-        cursor.execute("SELECT * FROM skilljob")
-        rows = cursor.fetchall()
+    finally:
+        # Close the connection in a finally block to ensure it happens even if an exception is raised
+        conn.close()
 
-        # Print the column names
-        column_names = [description[0] for description in cursor.description]
-        print(column_names)
 
-        # Print data in each column for each row
-        for row in rows:
-            print(row)
+def displaytablecontent():
+    # Gets connection and cursor from utilities
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+
+    # Retrieve and display data
+    cursor.execute("SELECT * FROM skilljob")
+    rows = cursor.fetchall()
+
+    # Print the column names
+    column_names = [description[0] for description in cursor.description]
+    print(column_names)
+
+    # Print data in each column for each row
+    for row in rows:
+        print(row)
+
+
+def get_masked_cv_and_survey(email):
+    # Gets connection and cursor from utilities
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+
+    try:
+        # Retrieve Masked_CV and Masked_Survey for a specific email
+        cursor.execute(
+            "SELECT Masked_CV, Masked_Survey FROM skilljob WHERE Email_Address=?", (email,))
+        row = cursor.fetchone()
+
+        if row:
+            masked_cv, masked_survey_json = row
+            # Convert JSON string to Python object
+            masked_survey = json.loads(masked_survey_json)
+            return masked_cv, masked_survey
+        else:
+            print(f"No data found for email: {email}")
+            return None, None
 
     finally:
         # Close the connection in a finally block to ensure it happens even if an exception is raised
+        conn.close()
+
+
+def update_response(email_address, new_response):
+    # Connect to the database
+    conn = sqlite3.connect('mydatabase.db')
+    cursor = conn.cursor()
+
+    try:
+        # Update the Response column for the given Email_Address
+        update_query = f"UPDATE skilljob SET Response = ? WHERE Email_Address = ?"
+        cursor.execute(update_query, (new_response, email_address))
+
+        # Commit the changes
+        conn.commit()
+
+        print(
+            f"Response updated successfully for Email_Address: {email_address}")
+    except sqlite3.Error as e:
+        print(f"Error updating response: {e}")
+    finally:
+        # Close the connection
         conn.close()

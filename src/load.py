@@ -1,5 +1,3 @@
-import sqlite3
-import json
 from transform import masked_cv, masked_survey, cvsurveyemail
 import utilities
 
@@ -8,3 +6,7 @@ import utilities
 
 utilities.create_and_insert_skilljob_table(
     cvsurveyemail, masked_cv, masked_survey)
+
+
+# Display Contents on table of database
+# utilities.displaytablecontent()
