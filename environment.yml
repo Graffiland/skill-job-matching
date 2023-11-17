@@ -8,6 +8,7 @@ dependencies:
   - python == 3.9
   - spacy==3.7.1
   - mlflow==2.8.0
+  - pyscopg2
   - pip:
       - python-docx == 1.0.1
       - Document == 1.0
@@ -19,3 +20,5 @@ dependencies:
       - PyYAML == 6.0.1
       - mlflow>=1.0
       - prefect
+      - pyscopg2
+      
