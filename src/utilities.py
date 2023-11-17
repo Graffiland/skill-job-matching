@@ -6,7 +6,18 @@ import json
 import csv
 import re
 import spacy
-import sqlite3
+import psycopg2
+from dotenv import dotenv_values
+
+secrets=dotenv_values(".env.db")
+
+# enrionment variables
+db_name = secrets["DB_NAME"]
+db_user = secrets["DB_USER"]
+db_localhost= secrets["DB_LOCALHOST"]
+db_password = secrets["DB_PASSWORD"]
+db_port = secrets["DB_PORT"]
+ 
 
 JOBS_SKILLS_CONFIG = None
 
@@ -283,67 +294,66 @@ def mask_sensitive_data(extracted_surveys):
 # FUNCTIONS FROM LOAD.py
 
 def create_and_insert_skilljob_table(cvsurveyemail, masked_cv, masked_survey):
-    # Gets connection and cursor from utilities
-    conn = sqlite3.connect('mydatabase.db')
-    cursor = conn.cursor()
+    # connecting with the database
+    conn = psycopg2.connect(database = db_name, 
+                        user = db_user, 
+                        host= db_localhost,
+                        password = db_password,
+                        port=db_port)
+    cur=conn.cursor()
+    
+    masked_survey = json.dumps(masked_survey)
+    ## cretaing records in the table 
+    cur.execute("INSERT INTO data_dump(email_address, masked_cv, masked_survey) VALUES (%s, %s, %s)",(cvsurveyemail,masked_cv,masked_survey))
 
-    try:
-        # Drop the table if it exists (optional)
-        cursor.execute('''DROP TABLE IF EXISTS skilljob''')
+    conn.commit()
+    cur.close()
+    conn.close()
 
-        # Create the skilljob table with the specified columns
-        cursor.execute('''CREATE TABLE skilljob (
-            Email_Address TEXT PRIMARY KEY CHECK(LENGTH(Email_Address) <= 1000000000),
-            Masked_CV TEXT CHECK(LENGTH(Masked_CV) <= 1000000000),
-            Masked_Survey JSON CHECK(LENGTH(Masked_Survey) <= 10000000000),
-            Response TEXT CHECK(LENGTH(Response) <= 1000000000)
-        )''')
-
-        # Insert data into the table
-        insert_data = [
-            (cvsurveyemail, masked_cv, json.dumps(masked_survey)),
-            # Add more rows as needed
-        ]
-
-        cursor.executemany(
-            "INSERT INTO skilljob (Email_Address, Masked_CV, Masked_Survey) VALUES (?,?,?)", insert_data)
-
-        # Commit the changes
-        conn.commit()
-
-    finally:
-        # Close the connection in a finally block to ensure it happens even if an exception is raised
-        conn.close()
 
 
 def displaytablecontent():
     # Gets connection and cursor from utilities
-    conn = sqlite3.connect('mydatabase.db')
-    cursor = conn.cursor()
+    conn = psycopg2.connect(database = db_name, 
+                        user = db_user, 
+                        host= db_localhost,
+                        password = db_password,
+                        port=db_port)
+    cur=conn.cursor()
+    cur.execute('SELECT * FROM data_dump;')
 
-    # Retrieve and display data
-    cursor.execute("SELECT * FROM skilljob")
-    rows = cursor.fetchall()
+    # Fetch column names from the cursor description
+    column_names = [desc[0] for desc in cur.description]
 
-    # Print the column names
-    column_names = [description[0] for description in cursor.description]
-    print(column_names)
+    rows = cur.fetchall()
+    conn.commit()
+    conn.close()
 
-    # Print data in each column for each row
+    #print column names
+    print("Column Names:", column_names)
+
+    # print row data
     for row in rows:
         print(row)
 
 
+
+
 def get_masked_cv_and_survey(email):
     # Gets connection and cursor from utilities
-    conn = sqlite3.connect('mydatabase.db')
-    cursor = conn.cursor()
+    conn = psycopg2.connect(database = db_name, 
+                        user = db_user, 
+                        host= db_localhost,
+                        password = db_password,
+                        port=db_port)
+
+    cur = conn.cursor()
 
     try:
         # Retrieve Masked_CV and Masked_Survey for a specific email
-        cursor.execute(
-            "SELECT Masked_CV, Masked_Survey FROM skilljob WHERE Email_Address=?", (email,))
-        row = cursor.fetchone()
+        cur.execute(
+            "SELECT masked_cv, masked_survey FROM data_dump WHERE email_dddress=%s", (email,))
+        row = cur.fetchone()
 
         if row:
             masked_cv, masked_survey_json = row
@@ -354,27 +364,37 @@ def get_masked_cv_and_survey(email):
             print(f"No data found for email: {email}")
             return None, None
 
+    except psycopg2.Error as e:
+        print(f"Error retrieving data: {e}")
+        return None, None
+
     finally:
         # Close the connection in a finally block to ensure it happens even if an exception is raised
         conn.close()
 
 
+
+
 def update_response(email_address, new_response):
     # Connect to the database
-    conn = sqlite3.connect('mydatabase.db')
-    cursor = conn.cursor()
+    conn = psycopg2.connect(database = db_name, 
+                        user = db_user, 
+                        host= db_localhost,
+                        password = db_password,
+                        port=db_port)
+    cur=conn.cursor()
 
     try:
-        # Update the Response column for the given Email_Address
-        update_query = f"UPDATE skilljob SET Response = ? WHERE Email_Address = ?"
-        cursor.execute(update_query, (new_response, email_address))
+    # Update the Response column for the given Email_Address
+      update_query = f"UPDATE data_dump SET response = %s WHERE email_address = %s"
+      cur.execute(update_query, (new_response, email_address))
 
         # Commit the changes
-        conn.commit()
+      conn.commit()
 
-        print(
-            f"Response updated successfully for Email_Address: {email_address}")
-    except sqlite3.Error as e:
+      print(
+          f"Response updated successfully for Email_Address: {email_address}")
+    except psycopg2.Error as e:
         print(f"Error updating response: {e}")
     finally:
         # Close the connection
