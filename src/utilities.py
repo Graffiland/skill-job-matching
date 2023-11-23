@@ -9,7 +9,7 @@ import spacy
 import psycopg2
 from dotenv import dotenv_values
 
-secrets=dotenv_values(".env.db")
+secrets=dotenv_values(".env.ds")
 
 # enrionment variables
 db_name = secrets["DB_NAME"]
