@@ -1,7 +1,9 @@
 name: Deploy Python project to Azure Function App
 
 on:
-  [push]
+  push:
+    branch:
+      - Azgit
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'skilljob-app'   # set this to your function app name on Azure
