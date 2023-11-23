@@ -3,3 +3,17 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
+Document == 1.0
+langchain == 0.0.286
+openai == 0.28.0
+python-magic == 0.4.27
+python-docx == 1.0.1
+PyMuPDF == 1.23.5
+pypdf2 == 2.11.1
+PyYAML == 6.0.1
+mlflow>=1.0
+prefect
+pyscopg2
+spacy==3.7.1
+mlflow==2.8.0
+      
