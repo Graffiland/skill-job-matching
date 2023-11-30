@@ -12,7 +12,7 @@ openai.api_key = os.getenv("API_KEY")
 
 
 # Getting Data From Database
-email_to_search = email
+email_to_search = 'davidjitzi78@gmail.com'
 
 masked_cv_result, masked_survey_result = utilities.get_masked_cv_and_survey(
     email_to_search)

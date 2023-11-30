@@ -17,7 +17,7 @@ def extraction_cv(filepath):
     if filepath.lower().endswith('.docx'):
         # function use to extract data from a word doc
         return utilities.word_extractor(filepath)
-    elif filepath.lower().endswith('.docx'):
+    elif filepath.lower().endswith('.pdf'):
         # function use to extract data from a pdf file
         return utilities.pdf_extractor(filepath)
     else:
@@ -40,7 +40,7 @@ cv_files = cv_files if cv_files else []
 filepath = os.path.join(cv_directory, cv_files[0]) if cv_files else None
 
 # Survey filepath
-surveypath = os.path.join(DATA_DIR, 'RawData', 'surveys', 'Surveys1.xlsx')
+surveypath = os.path.join(DATA_DIR, 'RawData', 'surveys', 'Graduates.xlsx')
 
 # OUTPUTS (extracted_text(string) and extracted_survey(JSON format))
 extracted_survey = extraction_survey(surveypath)
