@@ -160,7 +160,7 @@ def create_mapping(cv_data_string, survey_data):
     if cv_data_string is not None:
         cv_email_matches = re.findall(r'[^\s:/<>@]+@[^\s:/<>@]+', cv_data_string)
         cv_emails = [email.strip() for email in cv_email_matches]
-        print(cv_emails)
+
 
         # Create a mapping dictionary based on email addresses
         mapping = {}

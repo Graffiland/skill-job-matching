@@ -1,13 +1,11 @@
 venv/
-
+.vscode/
 vscode/
 **mlruns/
 mlruns
 .env
 mydatabase.db/
 .env.ds
-
-
 
 .python_packages
 __pycache__
