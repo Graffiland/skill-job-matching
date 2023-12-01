@@ -7,4 +7,6 @@ mlruns
 mydatabase.db/
 .env.ds
 
-
+.python_packages
+__pycache__
+.venv

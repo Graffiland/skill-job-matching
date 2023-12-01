@@ -8,9 +8,15 @@ import re
 import spacy
 import psycopg2
 from dotenv import dotenv_values
+from pathlib import Path
+
+#root_dir=Path(os.path.dirname(os.path.abspath(__file__))).parent
 
 secrets=dotenv_values(".env.ds")
 
+#print(f'secret output:{dict(secrets)}')
+
+#print(dict(secrets))
 # enrionment variables
 db_name = secrets["DB_NAME"]
 db_user = secrets["DB_USER"]
@@ -26,14 +32,16 @@ JOBS_SKILLS_CONFIG = None
 # Load our model which would be use for masking of sensitive data using spacy library
 nlp = spacy.load("en_core_web_sm")
 
-
+#print(os.path.dirname(os.path.abspath(__file__)))
 # FUNCTIONS FOR EXTRACTION.PY
 
 def get_data_directory_path():
     """
         function is used to get path
     """
-    ROOT_DIR = os.getcwd()
+    #ROOT_DIR = str(Path(os.path.dirname(os.path.abspath(__file__))).parent)
+    #print(ROOT_DIR)
+    ROOT_DIR=os.getcwd()
     # This is to extract the patent directory from the ful path(ETLSystem)
     ROOT_DIR = os.path.dirname(ROOT_DIR)
     DATA_DIR = os.path.join(ROOT_DIR, "AllData")
@@ -150,8 +158,9 @@ def create_mapping(cv_data_string, survey_data):
         This function is use to map survey and cv using their email and returns a dictionary of survey and cv
     """
     if cv_data_string is not None:
-        cv_email_matches = re.findall(r'\S+@\S+', cv_data_string)
+        cv_email_matches = re.findall(r'[^\s:/<>@]+@[^\s:/<>@]+', cv_data_string)
         cv_emails = [email.strip() for email in cv_email_matches]
+
 
         # Create a mapping dictionary based on email addresses
         mapping = {}
@@ -164,7 +173,6 @@ def create_mapping(cv_data_string, survey_data):
                     "CV Text": cv_text,
                     "Survey Entry": survey_entry
                 }
-
         return mapping
     else:
         mapping = {}
@@ -309,6 +317,28 @@ def create_and_insert_skilljob_table(cvsurveyemail, masked_cv, masked_survey):
     conn.commit()
     cur.close()
     conn.close()
+    
+    
+def update_skilljob_table(cvsurveyemail, masked_cv, masked_survey):
+    # connecting with the database
+    conn = psycopg2.connect(
+        database=db_name,
+        user=db_user,
+        host=db_localhost,
+        password=db_password,
+        port=db_port
+    )
+    cur = conn.cursor()
+
+    masked_survey = json.dumps(masked_survey)
+
+    # Execute the SQL UPDATE statement
+    update_query = "UPDATE data_dump SET masked_cv = %s, masked_survey = %s WHERE email_address = %s"
+    cur.execute(update_query, (masked_cv, masked_survey, cvsurveyemail))
+
+    conn.commit()
+    cur.close()
+    conn.close()
 
 
 
@@ -352,14 +382,15 @@ def get_masked_cv_and_survey(email):
     try:
         # Retrieve Masked_CV and Masked_Survey for a specific email
         cur.execute(
-            "SELECT masked_cv, masked_survey FROM data_dump WHERE email_dddress=%s", (email,))
+            "SELECT masked_cv, masked_survey FROM data_dump WHERE email_address=%s", (email,))
         row = cur.fetchone()
 
         if row:
             masked_cv, masked_survey_json = row
             # Convert JSON string to Python object
-            masked_survey = json.loads(masked_survey_json)
-            return masked_cv, masked_survey
+            print(f"Type of masked_survey_json: {type(masked_survey_json)}")
+            #masked_survey = json.loads(masked_survey_json)
+            return masked_cv, masked_survey_json
         else:
             print(f"No data found for email: {email}")
             return None, None

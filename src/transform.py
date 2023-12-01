@@ -4,10 +4,12 @@ import json
 from extraction import extracted_text
 import utilities
 
+print(extracted_text)
 extracted_survey = json.loads(extracted_survey)
 
 # Creats a dictionary after using the method create_mapping that map both cv and survey on email.
 dict_cvsurvey = utilities.create_mapping(extracted_text, extracted_survey)
+#print(dict_cvsurvey)
 
 # retruns cv and survey from the dictionary for masking
 extracted_text, extracted_surveys, email = utilities.mask(dict_cvsurvey)

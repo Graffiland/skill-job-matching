@@ -1,8 +1,9 @@
+import os
 import openai
 import utilities
 from transform import email
-import os
 from dotenv import load_dotenv
+from transform import masked_cv, masked_survey
 
 load_dotenv()  # take environment variabel from .evn.
 
@@ -12,12 +13,12 @@ openai.api_key = os.getenv("API_KEY")
 
 
 # Getting Data From Database
-email_to_search = email
+#email_to_search = email
 
-masked_cv_result, masked_survey_result = utilities.get_masked_cv_and_survey(
-    email_to_search)
+#masked_cv_result, masked_survey_result = utilities.get_masked_cv_and_survey(
+    #email_to_search)
 
-
+masked_cv_result, masked_survey_result=masked_cv, masked_survey
 # Geting data from prompts
 DATA_DIR = utilities.get_data_directory_path()
 
