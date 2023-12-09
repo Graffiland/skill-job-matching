@@ -1,66 +1,57 @@
 import os
 import openai
 import utilities
-from transform import email
 from dotenv import load_dotenv
-from transform import masked_cv, masked_survey
-
-load_dotenv()  # take environment variabel from .evn.
 
 
-# enrionment variables
-openai.api_key = os.getenv("API_KEY")
+def process_data(masked_cv, masked_survey):
+    
+    load_dotenv()  # load environment variabel from .evn.
+    
+    # enrionment variables
+    openai.api_key = os.getenv("API_KEY")
 
+    masked_cv_result, masked_survey_result=masked_cv, masked_survey
+    # Geting data from prompts
+    DATA_DIR = utilities.get_data_directory_path()
 
-# Getting Data From Database
-#email_to_search = email
+    promptpath = os.path.join(DATA_DIR, 'RawData', 'prompts', 'prompt.docx')
 
-#masked_cv_result, masked_survey_result = utilities.get_masked_cv_and_survey(
-    #email_to_search)
+    # extracting data from prompt documents
+    extractedwordtext = utilities.word_extractor(promptpath)
 
-masked_cv_result, masked_survey_result=masked_cv, masked_survey
-# Geting data from prompts
-DATA_DIR = utilities.get_data_directory_path()
+    input = f'''
+    Below you will find a list of prompts questions for both a masked_cv and masked_survey , still provide responds if no cv was provided and indicate that no cv was provided: 
 
-promptpath = os.path.join(DATA_DIR, 'RawData', 'prompts', 'prompt.docx')
+    {extractedwordtext}
 
-# extracting data from prompt documents
-extractedwordtext = utilities.word_extractor(promptpath)
+    Here is the masked survey : 
 
-input = f'''
-Below you will find a list of prompts questions for both a masked_cv and masked_survey , still provide responds if no cv was provided and indicate that no cv was provided: 
+    {masked_survey_result}
 
-{extractedwordtext}
+    Here is the masked cv : 
 
-Here is the masked survey : 
+    {masked_cv_result}
 
-{masked_survey_result}
+    please can you provide detail response for this prompts.
 
-Here is the masked cv : 
+    '''
+    
+    input_messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Bellow you will find a list of prompts questions..."},
+        {"role": "user", "content": f"{input}"}
+        # Add more user or assistant messages as needed
+    ]
 
-{masked_cv_result}
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=input_messages,
+        temperature=0.7
+    )
 
-please can you provide detail response for this prompts.
+    # Parse the JSON string
+    response_content = response['choices'][0]['message']['content']
 
-'''
-
-
-input_messages = [
-    {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "Bellow you will find a list of prompts questions..."},
-    {"role": "user", "content": f"{input}"}
-    # Add more user or assistant messages as needed
-]
-
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=input_messages,
-    temperature=0.7
-)
-
-
-# Parse the JSON string
-response_dict = response
-
-# Access and print the content field
-print(response_dict['choices'][0]['message']['content'])
+    # Access and print the content field
+    return response_content
