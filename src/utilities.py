@@ -30,7 +30,9 @@ JOBS_SKILLS_CONFIG = None
 # Download spaCy model if not already installed
 
 # Load our model which would be use for masking of sensitive data using spacy library
-nlp = spacy.load("en_core_web_sm")
+ROOT_DIR=os.getcwd()
+modelpath = os.path.join(ROOT_DIR, 'models', 'en_core_web_sm-3.7.1')
+nlp = spacy.load(modelpath)
 
 #print(os.path.dirname(os.path.abspath(__file__)))
 # FUNCTIONS FOR EXTRACTION.PY
