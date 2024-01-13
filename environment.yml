@@ -17,6 +17,7 @@ dependencies:
       - PyMuPDF==1.23.5
       - pypdf2==2.11.1
       - PyYAML==6.0.1
+      - openpyxl==3.1.2
       - mlflow>=1.0
       - prefect
       - pytest
