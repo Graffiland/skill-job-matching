@@ -5,7 +5,7 @@ from src.Chartgpt import process_data
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
-@app.route(route="skilljob")
+@app.route(route="/home")
 def skilljob(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
@@ -18,6 +18,7 @@ def skilljob(req: func.HttpRequest) -> func.HttpResponse:
             
             # Call LLM script to process data
             processed_result = process_data(masked_cv_result, masked_survey_result)
+            print(processed_result)
         except ValueError:
             pass
         else:

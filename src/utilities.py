@@ -6,23 +6,23 @@ import json
 import csv
 import re
 import spacy
-import psycopg2
-from dotenv import dotenv_values
+#import psycopg2
+#from dotenv import dotenv_values
 from pathlib import Path
 
 #root_dir=Path(os.path.dirname(os.path.abspath(__file__))).parent
 
-secrets=dotenv_values(".env.ds")
+#secrets=dotenv_values(".env.ds")
 
 #print(f'secret output:{dict(secrets)}')
 
 #print(dict(secrets))
 # enrionment variables
-db_name = secrets["DB_NAME"]
-db_user = secrets["DB_USER"]
-db_localhost= secrets["DB_LOCALHOST"]
-db_password = secrets["DB_PASSWORD"]
-db_port = secrets["DB_PORT"]
+#db_name = secrets["DB_NAME"]
+#db_user = secrets["DB_USER"]
+#db_localhost= secrets["DB_LOCALHOST"]
+#db_password = secrets["DB_PASSWORD"]
+#db_port = secrets["DB_PORT"]
  
 
 JOBS_SKILLS_CONFIG = None
@@ -30,7 +30,9 @@ JOBS_SKILLS_CONFIG = None
 # Download spaCy model if not already installed
 
 # Load our model which would be use for masking of sensitive data using spacy library
-nlp = spacy.load("en_core_web_sm")
+root_dir=Path(os.path.dirname(os.path.abspath(__file__))).parent
+modelpath = os.path.join(root_dir, 'models', 'en_core_web_sm-3.7.1')
+nlp = spacy.load(modelpath)
 
 #print(os.path.dirname(os.path.abspath(__file__)))
 # FUNCTIONS FOR EXTRACTION.PY
