@@ -6,7 +6,7 @@ channels:
 dependencies:
   - pip==23.2.1
   - python==3.9
-  - spacy==3.7.1
+  - spacy==3.7.2
   - mlflow==2.8.0
   - pip:
       - python-docx==1.0.1
