@@ -2,6 +2,7 @@ import os
 import openai
 import utilities
 from dotenv import load_dotenv
+from transform import masked_cv, masked_survey
 
 
 def process_data(masked_cv, masked_survey):
@@ -45,7 +46,7 @@ def process_data(masked_cv, masked_survey):
     ]
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=input_messages,
         temperature=0.7
     )
@@ -55,3 +56,6 @@ def process_data(masked_cv, masked_survey):
 
     # Access and print the content field
     return response_content
+
+result = process_data(masked_cv, masked_survey)
+print(result)
